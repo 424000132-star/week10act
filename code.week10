@@ -1,0 +1,61 @@
+mixin Loggable {
+  void log(String message) => print('[LOG] $message');
+}
+
+abstract class Employee with Loggable {
+  final String _name;
+  final double _baseSalary;
+
+  Employee(this._name, this._baseSalary);
+
+  String get name => _name;
+  double get baseSalary => _baseSalary;
+
+  double calculatePay();
+
+  String describe() => '$_name earns ${calculatePay().toStringAsFixed(2)}';
+}
+
+class Developer extends Employee {
+  final int projectsDone;
+
+  Developer(String name, double baseSalary, this.projectsDone)
+      : super(name, baseSalary);
+
+  double calculatePay() => baseSalary + projectsDone * 500;
+}
+
+class Manager extends Employee {
+  final int teamSize;
+
+  Manager(String name, double baseSalary, this.teamSize)
+      : super(name, baseSalary);
+
+  double calculatePay() => baseSalary + teamSize * 1000;
+
+  String describe() => '${super.describe()} | Team size: $teamSize';
+}
+
+class PayrollSystem with Loggable {
+  void run(List<Employee> staff) {
+    log('Running payroll...');
+    double total = 0;
+    for (final e in staff) {
+      total += e.calculatePay(); 
+    }
+    log('Total payroll: ${total.toStringAsFixed(2)}');
+  }
+}
+
+void main() {
+  final team = <Employee>[
+    Developer('Piollo', 30000, 4),
+    Manager('Lexxine', 40000, 5),
+  ];
+
+  for (final e in team) {
+    print(e.describe());
+  }
+
+  PayrollSystem().run(team);
+}
