@@ -9,7 +9,7 @@ This Dart program demonstrates object-oriented programming concepts:
 - **Abstract class:** `Employee` defines shared employee information and the `calculatePay()` 
 
 ## How to Run
-Make sure Dart is installed. In the project folder, run:
+How to Run Open https://dartpad.dev/
 
 ```bash
 dart run main.dart
